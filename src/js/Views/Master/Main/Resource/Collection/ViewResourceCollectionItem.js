@@ -1,5 +1,7 @@
 import BaseViewCollectionItem from 'js/Views/Master/Main/BaseViewCollectionItem';
+import Events from 'js/Events';
 import Radio from 'backbone.radio';
+import rodan from 'rodan-client-core';
 
 /**
  * Item view for Resource Collection.
@@ -14,7 +16,7 @@ export default class ViewResourceCollectionItem extends BaseViewCollectionItem
      */
     _handleClick()
     {
-        Radio.channel('rodan').trigger(RODAN_EVENTS.EVENT__RESOURCE_SELECTED, {resource: this.model});
+        Radio.channel('rodan').trigger(Events.EVENT__RESOURCE_SELECTED, {resource: this.model});
     }
 
     /**

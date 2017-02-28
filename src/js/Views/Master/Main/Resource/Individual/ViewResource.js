@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
+import rodan from 'rodan-client-core';
 import ViewResourceTypeCollectionItem from 'js/Views/Master/Main/ResourceType/ViewResourceTypeCollectionItem';
 
 /**

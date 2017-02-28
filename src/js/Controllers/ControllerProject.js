@@ -136,6 +136,7 @@ export default class ControllerProject extends BaseController
      */
     _handleEventItemSelected(options)
     {
+        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__PROJECT_SET_ACTIVE, {project: options.project});
         this._activeProject = options.project;
         this._activeProject.fetch();
         var collection = new rodan.rodan_client_core.WorkflowRunCollection();

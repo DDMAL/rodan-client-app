@@ -361,7 +361,7 @@ export default class BehaviorTable extends Marionette.Behavior
                 !this._filtersInjected &&
                 collection.length > 0)
             {
-                var options = Radio.channel('rodan').request(rodan.rodan_client_core.events.REQUEST__SERVER_GET_ROUTE_OPTIONS, {route: collection.route});
+                var options = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SERVER_GET_ROUTE_OPTIONS, {route: collection.route});
                 if (options)
                 {
                     this._injectFiltering(options.filter_fields);
