@@ -1,7 +1,7 @@
 import Events from 'js/Events';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewLogin from './Login/ViewLogin';
 
 /**
@@ -32,8 +32,8 @@ export default class LayoutViewMain extends Marionette.LayoutView
     _initializeRadio()
     {
         Radio.channel('rodan').reply(Events.REQUEST__MAINREGION_SHOW_VIEW, options => this._handleCommandShow(options));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__AUTHENTICATION_LOGOUT_SUCCESS, () => this._handleDeauthenticationSuccess());
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__AUTHENTICATION_LOGINREQUIRED, () => this._handleAuthenticationLoginRequired());
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__AUTHENTICATION_LOGOUT_SUCCESS, () => this._handleDeauthenticationSuccess());
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__AUTHENTICATION_LOGINREQUIRED, () => this._handleAuthenticationLoginRequired());
     }
 
     /**

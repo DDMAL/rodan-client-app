@@ -1,5 +1,6 @@
 import BaseViewCollectionItem from 'js/Views/Master/Main/BaseViewCollectionItem';
 import Radio from 'backbone.radio';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * Resource item View for Collection in modal.
@@ -33,11 +34,11 @@ export default class ViewResourceCollectionModalItem extends BaseViewCollectionI
         this._requestData.resource = this.model;
         if (this._assigned)
         {
-            rodan.rodan_client_core.channel.request(this._unassignRequest, this._requestData); 
+            RodanClientCore.channel.request(this._unassignRequest, this._requestData); 
         }
         else
         {
-            rodan.rodan_client_core.channel.request(this._assignRequest, this._requestData); 
+            RodanClientCore.channel.request(this._assignRequest, this._requestData); 
         }
     }
 }

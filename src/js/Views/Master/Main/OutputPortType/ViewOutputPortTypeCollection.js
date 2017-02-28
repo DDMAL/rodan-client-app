@@ -1,5 +1,6 @@
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
+import RodanClientCore from 'rodan-client-core';
 import ViewOutputPortTypeCollectionItem from './ViewOutputPortTypeCollectionItem';
 
 /**
@@ -17,7 +18,7 @@ export default class ViewOutputPortTypeCollection extends Marionette.CompositeVi
      */
     initialize(options)
     {
-        var jobCollection = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__GLOBAL_JOB_COLLECTION);
+        var jobCollection = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__GLOBAL_JOB_COLLECTION);
         var job = jobCollection.get(options.workflowjob.getJobUuid());
         /** @ignore */
         this.collection = job.get('output_port_types');

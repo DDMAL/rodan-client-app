@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewResourceTypeCollectionItem from 'js/Views/Master/Main/ResourceType/ViewResourceTypeCollectionItem';
 
 /**
@@ -18,7 +18,7 @@ export default class ViewResource extends Marionette.CompositeView
     initialize()
     {
         /** @ignore */
-        this.collection = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
+        this.collection = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
         this.collection.each(function(model) { model.unset('selected'); });
         var resourceType = this.collection.findWhere({url: this.model.get('resource_type')});
         resourceType.set('selected', 'selected');
@@ -53,7 +53,7 @@ export default class ViewResource extends Marionette.CompositeView
      */
     _handleClickButtonSave()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__RESOURCE_SAVE, {resource: this.model,
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__RESOURCE_SAVE, {resource: this.model,
                                                                              fields: {resource_type: this.ui.selectResourceType.find(':selected').val(),
                                                                                       name: this.ui.resourceName.val(),
                                                                                       description: this.ui.resourceDescription.val()}});
@@ -64,7 +64,7 @@ export default class ViewResource extends Marionette.CompositeView
      */
     _handleClickButtonDelete()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__RESOURCE_DELETE, {resource: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__RESOURCE_DELETE, {resource: this.model});
     }
 
     /**
@@ -72,7 +72,7 @@ export default class ViewResource extends Marionette.CompositeView
      */
     _handleClickDownload()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__RESOURCE_DOWNLOAD, {resource: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__RESOURCE_DOWNLOAD, {resource: this.model});
     }
 
     /**
@@ -80,7 +80,7 @@ export default class ViewResource extends Marionette.CompositeView
      */
     _handleClickView()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__RESOURCE_VIEWER_ACQUIRE, {resource: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__RESOURCE_VIEWER_ACQUIRE, {resource: this.model});
     }
 }
 ViewResource.prototype.modelEvents = {

@@ -2,7 +2,7 @@ import BaseController from './BaseController';
 import Events from 'js/Events';
 import LayoutViewModel from 'js/Views/Master/Main/LayoutViewModel';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewWorkflow from 'js/Views/Master/Main/Workflow/Individual/ViewWorkflow';
 import ViewWorkflowCollection from 'js/Views/Master/Main/Workflow/Collection/ViewWorkflowCollection';
 
@@ -31,9 +31,9 @@ export default class ControllerWorkflow extends BaseController
      */
     _handleEventCollectionSelected(options)
     {
-        var collection = new rodan.rodan_client_core.WorkflowCollection();
+        var collection = new RodanClientCore.WorkflowCollection();
         collection.fetch({data: {project: options.project.id}});
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
         this._layoutView = new LayoutViewModel();
         Radio.channel('rodan').request(Events.REQUEST__MAINREGION_SHOW_VIEW, {view: this._layoutView});
         this._viewCollection = new ViewWorkflowCollection({collection: collection});

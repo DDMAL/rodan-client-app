@@ -2,7 +2,7 @@ import $ from 'jquery';
 import _ from 'underscore';
 import BaseViewCollection from 'js/Views/Master/Main/BaseViewCollection';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * View for Resource Collection.
@@ -18,7 +18,7 @@ export default class ViewResourceCollection extends BaseViewCollection
         for (var i = 0; i < this.ui.fileInput[0].files.length; i++)
         {
         	var file = this.ui.fileInput[0].files[i];
-    	    rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__RESOURCE_CREATE, {project: this.model, file: file, resourcetype: type});
+    	    RodanClientCore.channel.request(RodanClientCore.events.REQUEST__RESOURCE_CREATE, {project: this.model, file: file, resourcetype: type});
     	}
 	    this.ui.fileInput.replaceWith(this.ui.fileInput = this.ui.fileInput.clone(true));
     }
@@ -29,7 +29,7 @@ export default class ViewResourceCollection extends BaseViewCollection
     onRender()
     {
         var templateResourceType = _.template($('#template-resourcetype_collection_item').html());
-        var resourceTypeCollection = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
+        var resourceTypeCollection = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
 //        var html = templateResourceType({url: null, mimetype: 'Auto-detect', extension: 'Rodan will attempt to determine the file type based on the file itself'});
  //       this.$el.find('#select-resourcetype').append(html);
         for (var i = 0; i < resourceTypeCollection.length; i++)

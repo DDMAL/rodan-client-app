@@ -1,5 +1,6 @@
 import BaseViewCollectionItem from 'js/Views/Master/Main/BaseViewCollectionItem';
 import Radio from 'backbone.radio';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * View for Job item in Job Collection.
@@ -27,7 +28,7 @@ export default class ViewJobCollectionItem extends BaseViewCollectionItem
      */
     _handleClickButtonAdd()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__WORKFLOWBUILDER_ADD_WORKFLOWJOB, {job: this.model, workflow: this._workflow});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOWBUILDER_ADD_WORKFLOWJOB, {job: this.model, workflow: this._workflow});
     }
 }
 ViewJobCollectionItem.prototype.template = '#template-main_job_collection_item';

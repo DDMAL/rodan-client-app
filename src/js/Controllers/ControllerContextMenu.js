@@ -2,7 +2,7 @@ import $ from 'jquery';
 import BaseController from './BaseController';
 import Events from 'js/Events';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * Controls context menus.

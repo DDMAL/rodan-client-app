@@ -1,5 +1,6 @@
 import BaseViewCollectionItem from 'js/Views/Master/Main/BaseViewCollectionItem';
 import Radio from 'backbone.radio';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * InputPortType Collection item view.
@@ -28,7 +29,7 @@ export default class ViewInputPortTypeCollectionItem extends BaseViewCollectionI
      */
     _handleButtonNewInputPort()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__WORKFLOWBUILDER_ADD_INPUTPORT, {inputporttype: this.model, workflowjob: this._workflowJob, workflow: this._workflow});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOWBUILDER_ADD_INPUTPORT, {inputporttype: this.model, workflowjob: this._workflowJob, workflow: this._workflow});
     }
 }
 ViewInputPortTypeCollectionItem.prototype.tagName = 'tr';

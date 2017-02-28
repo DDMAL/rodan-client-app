@@ -29,7 +29,7 @@ export default class ViewNavigationNodeResourceLists extends ViewNavigationNode
      */
     _sendClickEvents()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__PROJECT_SET_ACTIVE, {project: this.model.get('project')});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__PROJECT_SET_ACTIVE, {project: this.model.get('project')});
         Radio.channel('rodan').trigger(Events.EVENT__RESOURCELIST_SELECTED_COLLECTION, {project: this.model.get('project')});
     }
 

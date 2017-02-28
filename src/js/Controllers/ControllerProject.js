@@ -5,7 +5,7 @@ import Events from 'js/Events';
 import LayoutViewModel from 'js/Views/Master/Main/LayoutViewModel';
 import LayoutViewProjectUsers from 'js/Views/Master/Main/Project/Individual/LayoutViewProjectUsers';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewProject from 'js/Views/Master/Main/Project/Individual/ViewProject';
 import ViewProjectCollection from 'js/Views/Master/Main/Project/Collection/ViewProjectCollection';
 import ViewUserCollectionItem from 'js/Views/Master/Main/User/Collection/ViewUserCollectionItem';
@@ -36,13 +36,13 @@ export default class ControllerProject extends BaseController
     _initializeRadio()
     {
         // Rodan core events.
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__PROJECT_ADDED_USER_ADMIN, options => this._handleEventProjectAddedUserAdmin(options));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__PROJECT_ADDED_USER_WORKER, options => this._handleEventProjectAddedUserWorker(options));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__PROJECT_CREATED, options => this._handleEventProjectGenericResponse(options));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__PROJECT_DELETED, options => this._handleEventProjectDeleteResponse(options));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__PROJECT_REMOVED_USER_ADMIN, options => this._handleEventProjectRemovedUser(options));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__PROJECT_REMOVED_USER_WORKER, options => this._handleEventProjectRemovedUser(options));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__PROJECT_SAVED, options => this._handleEventProjectGenericResponse(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__PROJECT_ADDED_USER_ADMIN, options => this._handleEventProjectAddedUserAdmin(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__PROJECT_ADDED_USER_WORKER, options => this._handleEventProjectAddedUserWorker(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__PROJECT_CREATED, options => this._handleEventProjectGenericResponse(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__PROJECT_DELETED, options => this._handleEventProjectDeleteResponse(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__PROJECT_REMOVED_USER_ADMIN, options => this._handleEventProjectRemovedUser(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__PROJECT_REMOVED_USER_WORKER, options => this._handleEventProjectRemovedUser(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__PROJECT_SAVED, options => this._handleEventProjectGenericResponse(options));
 
         // App events.
         Radio.channel('rodan').on(Events.EVENT__PROJECT_SELECTED, options => this._handleEventItemSelected(options));
@@ -64,25 +64,25 @@ export default class ControllerProject extends BaseController
         options.project.fetch();
 
         // Create collections to store admins and workers.
-        var adminUserCollection = new rodan.rodan_client_core.UserCollection();
-        var workerUserCollection = new rodan.rodan_client_core.UserCollection();
+        var adminUserCollection = new RodanClientCore.UserCollection();
+        var workerUserCollection = new RodanClientCore.UserCollection();
 
         // Get admins and workers for project.
         var ajaxSettingsAdmins = {success: (response) => this._handleProjectGetAdminsSuccess(response, adminUserCollection),
-                                  error: (response) => rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
+                                  error: (response) => RodanClientCore.channel.request(RodanClientCore.events.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
                                   type: 'GET',
                                   dataType: 'json',
                                   url: options.project.get('url') + 'admins/'};
         var ajaxSettingsWorkers = {success: (response) => this._handleProjectGetWorkersSuccess(response, workerUserCollection),
-                                   error: (response) => rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
+                                   error: (response) => RodanClientCore.channel.request(RodanClientCore.events.REQUEST__SYSTEM_HANDLE_ERROR, {response: response}),
                                    type: 'GET',
                                    dataType: 'json',
                                    url: options.project.get('url') + 'workers/'};
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettingsAdmins});
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettingsWorkers});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettingsAdmins});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__SERVER_REQUEST_AJAX, {settings: ajaxSettingsWorkers});
 
         // Need collection for all users.
-        var collection = new rodan.rodan_client_core.UserCollection();
+        var collection = new RodanClientCore.UserCollection();
         collection.fetch();
         var userSelectionView = new BaseViewCollection({collection: collection,
                                                         template: '#template-main_user_selection',
@@ -118,7 +118,7 @@ export default class ControllerProject extends BaseController
     _handleEventProjectGenericResponse()
     {
         Radio.channel('rodan').request(Events.REQUEST__MODAL_HIDE);
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__GLOBAL_PROJECTS_LOAD, {});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__GLOBAL_PROJECTS_LOAD, {});
     }
 
     /**
@@ -127,7 +127,7 @@ export default class ControllerProject extends BaseController
     _handleEventProjectDeleteResponse()
     {
         Radio.channel('rodan').request(Events.REQUEST__MODAL_HIDE);
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__GLOBAL_PROJECTS_LOAD, {});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__GLOBAL_PROJECTS_LOAD, {});
         Radio.channel('rodan').trigger(Events.EVENT__PROJECT_SELECTED_COLLECTION);
     }
 
@@ -136,12 +136,12 @@ export default class ControllerProject extends BaseController
      */
     _handleEventItemSelected(options)
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__PROJECT_SET_ACTIVE, {project: options.project});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__PROJECT_SET_ACTIVE, {project: options.project});
         this._activeProject = options.project;
         this._activeProject.fetch();
-        var collection = new rodan.rodan_client_core.WorkflowRunCollection();
+        var collection = new RodanClientCore.WorkflowRunCollection();
         collection.fetch({data: {project: this._activeProject.id}});
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
         var layoutView = new LayoutViewModel({template: '#template-main_layoutview_model_inverse'});
         Radio.channel('rodan').request(Events.REQUEST__MAINREGION_SHOW_VIEW, {view: layoutView});
         layoutView.showItem(new ViewProject({model: this._activeProject}));
@@ -153,8 +153,8 @@ export default class ControllerProject extends BaseController
      */
     _handleEventCollectionSelected()
     {
-        var collection = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__GLOBAL_PROJECT_COLLECTION);
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
+        var collection = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__GLOBAL_PROJECT_COLLECTION);
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
         var view = new ViewProjectCollection({collection: collection});
         Radio.channel('rodan').request(Events.REQUEST__MAINREGION_SHOW_VIEW, {view: view});
     }

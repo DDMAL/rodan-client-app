@@ -24,7 +24,7 @@ export default class ViewWorkflowCollectionImportItem extends BaseViewCollection
 ///////////////////////////////////////////////////////////////////////////////////////
     _handleButtonImportWorkflow()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__WORKFLOWBUILDER_IMPORT_WORKFLOW, {origin: this.model, target: this._workflow});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOWBUILDER_IMPORT_WORKFLOW, {origin: this.model, target: this._workflow});
     }
 }
 ViewWorkflowCollectionImportItem.prototype.template = '#template-main_workflowbuilder_workflow_collection_item_import';

@@ -1,6 +1,6 @@
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * Password view.
@@ -22,7 +22,7 @@ export default class ViewPassword extends Marionette.CompositeView
         }
         else
         {
-            rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__USER_CHANGE_PASSWORD, {newpassword: this.ui.textPassword.val(),
+            RodanClientCore.channel.request(RodanClientCore.events.REQUEST__USER_CHANGE_PASSWORD, {newpassword: this.ui.textPassword.val(),
                                                                                         currentpassword: this.ui.textPasswordCurrent.val()});  
         }
     }

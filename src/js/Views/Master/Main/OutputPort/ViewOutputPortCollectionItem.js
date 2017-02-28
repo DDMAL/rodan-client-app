@@ -1,5 +1,6 @@
 import BaseViewCollectionItem from 'js/Views/Master/Main/BaseViewCollectionItem';
 import Radio from 'backbone.radio';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * OutputPort Collection item view.
@@ -28,7 +29,7 @@ export default class ViewOutputPortCollectionItem extends BaseViewCollectionItem
      */
     _handleButtonDelete()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__WORKFLOWBUILDER_REMOVE_OUTPUTPORT, {outputport: this.model, workflow: this._workflow, workflowjob: this._workflowJob});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOWBUILDER_REMOVE_OUTPUTPORT, {outputport: this.model, workflow: this._workflow, workflowjob: this._workflowJob});
     }
 }
 ViewOutputPortCollectionItem.prototype.ui = {

@@ -1,6 +1,6 @@
 import BaseViewCollectionItem from 'js/Views/Master/Main/BaseViewCollectionItem';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * Item view for User Collection.
@@ -18,7 +18,7 @@ export default class ViewUserCollectionItem extends BaseViewCollectionItem
     initialize(options)
     {
         this._project = options.project;
-        this._removeEvent = options.admin ? rodan.rodan_client_core.events.REQUEST__PROJECT_REMOVE_USER_ADMIN : rodan.rodan_client_core.events.REQUEST__PROJECT_REMOVE_USER_WORKER;
+        this._removeEvent = options.admin ? RodanClientCore.events.REQUEST__PROJECT_REMOVE_USER_ADMIN : RodanClientCore.events.REQUEST__PROJECT_REMOVE_USER_WORKER;
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ export default class ViewUserCollectionItem extends BaseViewCollectionItem
      */
     _handleClickButtonRemove()
     {
-        rodan.rodan_client_core.channel.request(this._removeEvent, {user: this.model, project: this._project});
+        RodanClientCore.channel.request(this._removeEvent, {user: this.model, project: this._project});
     }
 }
 ViewUserCollectionItem.prototype.ui = {

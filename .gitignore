@@ -4,5 +4,6 @@ npm-debug.log
 node_modules/
 build
 configuration.json
+plugins.json
 ._*
 __*

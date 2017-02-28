@@ -5,7 +5,7 @@ import BaseViewCollection from 'js/Views/Master/Main/BaseViewCollection';
 import Events from 'js/Events';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewNavigationNodeRoot from './ViewNavigationNodeRoot';
 import ViewResourceTypeDetailCollectionItem from 'js/Views/Master/Main/ResourceType/ViewResourceTypeDetailCollectionItem';
 import ViewUser from 'js/Views/Master/Main/User/Individual/ViewUser';
@@ -37,8 +37,8 @@ export default class LayoutViewNavigation extends Marionette.LayoutView
      */
     _initializeRadio()
     {
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__AUTHENTICATION_LOGIN_SUCCESS, options => this._handleAuthenticationSuccess(options));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__AUTHENTICATION_LOGOUT_SUCCESS, () => this._handleDeauthenticationSuccess());
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__AUTHENTICATION_LOGIN_SUCCESS, options => this._handleAuthenticationSuccess(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__AUTHENTICATION_LOGOUT_SUCCESS, () => this._handleDeauthenticationSuccess());
         Radio.channel('rodan').reply(Events.REQUEST__SHOW_ABOUT, () => this._handleRequestShowAbout());
         Radio.channel('rodan').reply(Events.REQUEST__SHOW_HELP, () => this._handleRequestShowHelp());
         Radio.channel('rodan').reply(Events.REQUEST__SHOW_API, () => this._handleRequestShowAPI());
@@ -50,7 +50,7 @@ export default class LayoutViewNavigation extends Marionette.LayoutView
     _handleAuthenticationSuccess()
     {
         var model = new Backbone.Model({name: 'Projects'});
-        var object = {model: model, collection: rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__GLOBAL_PROJECT_COLLECTION)};
+        var object = {model: model, collection: RodanClientCore.channel.request(RodanClientCore.events.REQUEST__GLOBAL_PROJECT_COLLECTION)};
         this.regionNavigationTree.show(new ViewNavigationNodeRoot(object)); 
         this.$el.find('#button-navigation_logout').prop('disabled', false);
         this.$el.find('#button-navigation_preferences').prop('disabled', false);
@@ -71,7 +71,7 @@ export default class LayoutViewNavigation extends Marionette.LayoutView
      */
     _handleButtonLogout()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__AUTHENTICATION_LOGOUT);
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__AUTHENTICATION_LOGOUT);
     }
 
     /**
@@ -95,7 +95,7 @@ export default class LayoutViewNavigation extends Marionette.LayoutView
      */
     _handleButtonPreferences()
     {
-        var user = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__AUTHENTICATION_USER);
+        var user = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__AUTHENTICATION_USER);
         var view = new ViewUser({model: user});
         Radio.channel('rodan').request(Events.REQUEST__MODAL_SHOW, {title: user.get('username'), content: view});
     }
@@ -113,16 +113,16 @@ export default class LayoutViewNavigation extends Marionette.LayoutView
      */
     _handleRequestShowAbout()
     {
-        var serverConfig = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SERVER_CONFIGURATION);
-        var hostname = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SERVER_GET_HOSTNAME);
-        var version = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SERVER_GET_VERSION);
-        var serverDate = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SERVER_DATE);
+        var serverConfig = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__SERVER_CONFIGURATION);
+        var hostname = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__SERVER_GET_HOSTNAME);
+        var version = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__SERVER_GET_VERSION);
+        var serverDate = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__SERVER_DATE);
         serverDate = serverDate ? serverDate.toString() : 'unknown';
         var html = _.template($('#template-misc_about').html())({hostname: hostname,
                                                                  version: version,
                                                                  serverConfiguration: serverConfig,
                                                                  date: serverDate,
-                                                                 client: rodan.rodan_client_core.config.CLIENT});
+                                                                 client: RodanClientCore.config.CLIENT});
         Radio.channel('rodan').request(Events.REQUEST__MODAL_SHOW, {title: 'About', content: html});
     }
 
@@ -131,7 +131,7 @@ export default class LayoutViewNavigation extends Marionette.LayoutView
      */
     _handleRequestShowHelp()
     {
-        var html = _.template($('#template-misc_help').html())({email: rodan.rodan_client_core.config.ADMIN_CLIENT.EMAIL, name: rodan.rodan_client_core.config.ADMIN_CLIENT.NAME, url: rodan.rodan_client_core.config.WEBSITE_URL});
+        var html = _.template($('#template-misc_help').html())({email: RodanClientCore.config.ADMIN_CLIENT.EMAIL, name: RodanClientCore.config.ADMIN_CLIENT.NAME, url: RodanClientCore.config.WEBSITE_URL});
         Radio.channel('rodan').request(Events.REQUEST__MODAL_SHOW, {title: 'Help', content: html});
     }
 
@@ -140,7 +140,7 @@ export default class LayoutViewNavigation extends Marionette.LayoutView
      */
     _handleRequestShowAPI()
     {
-        var collection = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
+        var collection = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__GLOBAL_RESOURCETYPE_COLLECTION);
         var view = new BaseViewCollection({collection: collection,
                                            template: '#template-resourcetype_collection',
                                            childView: ViewResourceTypeDetailCollectionItem});

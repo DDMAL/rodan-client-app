@@ -8,13 +8,14 @@ import ControllerProject from './Controllers/ControllerProject';
 import ControllerResource from './Controllers/ControllerResource';
 import ControllerRunJob from './Controllers/ControllerRunJob';
 import ControllerWorkflow from './Controllers/ControllerWorkflow';
+import ControllerWorkflowBuilder from './Controllers/ControllerWorkflowBuilder';
 import ControllerWorkflowRun from './Controllers/ControllerWorkflowRun';
 import Events from 'js/Events';
 import LayoutViewMaster from './Views/Master/LayoutViewMaster';
 import Marionette from 'backbone.marionette';
 import moment from 'moment';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * Main application class.
@@ -29,8 +30,8 @@ export default class Application extends Marionette.Application
      */
     onStart()
     {
-        rodan.rodan_client_core.setInitFunction(() => this._startUp());
-        rodan.rodan_client_core.config.load('configuration.json', () => rodan.rodan_client_core.initialize());
+        RodanClientCore.setInitFunction(() => this._startUp());
+        RodanClientCore.config.load('configuration.json', () => RodanClientCore.initialize());
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -42,7 +43,7 @@ export default class Application extends Marionette.Application
     _startUp()
     {
         // Check debug.
-        if (rodan.rodan_client_core.config.DEBUG)
+        if (RodanClientCore.config.DEBUG)
         {
             Radio.tuneIn('rodan');
         }
@@ -62,7 +63,7 @@ export default class Application extends Marionette.Application
      */
     _initializeDateTimeFormatter()
     {
-        moment.defaultFormat = rodan.rodan_client_core.config.DATETIME_FORMAT;
+        moment.defaultFormat = RodanClientCore.config.DATETIME_FORMAT;
         _.formatFromUTC = function(dateTime)
         {
             // TODO - see https://github.com/DDMAL/rodan-client/issues/59
@@ -93,8 +94,8 @@ export default class Application extends Marionette.Application
      */
     _initializeRadio()
     {
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__SERVER_ROUTESLOADED, () => this._handleEventRoutesLoaded());
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__AUTHENTICATION_LOGIN_SUCCESS, () => this._handleAuthenticationSuccess());
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__SERVER_ROUTESLOADED, () => this._handleEventRoutesLoaded());
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__AUTHENTICATION_LOGIN_SUCCESS, () => this._handleAuthenticationSuccess());
     }
 
     /**
@@ -108,6 +109,7 @@ export default class Application extends Marionette.Application
         this._controllerResource = new ControllerResource();
         this._controllerRunJob = new ControllerRunJob();
         this._controllerWorkflow = new ControllerWorkflow();
+        this._controllerWorkflowBuilder = new ControllerWorkflowBuilder();
         this._controllerWorkflowRun = new ControllerWorkflowRun();
 
     }
@@ -130,7 +132,7 @@ export default class Application extends Marionette.Application
         this.regionMaster.show(this._layoutViewMaster);
 
         // Check authentication.
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__AUTHENTICATION_CHECK); 
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__AUTHENTICATION_CHECK); 
     }
 
     /**

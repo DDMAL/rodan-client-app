@@ -2,7 +2,7 @@ import BaseController from './BaseController';
 import Events from 'js/Events';
 import LayoutViewModel from 'js/Views/Master/Main/LayoutViewModel';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewResource from 'js/Views/Master/Main/Resource/Individual/ViewResource';
 import ViewResourceCollection from 'js/Views/Master/Main/Resource/Collection/ViewResourceCollection';
 import ViewResourceCollectionItem from 'js/Views/Master/Main/Resource/Collection/ViewResourceCollectionItem';
@@ -38,10 +38,10 @@ export default class ControllerResource extends BaseController
      */
     _handleEventCollectionSelected(options)
     {
-        var collection = new rodan.rodan_client_core.ResourceCollection();
+        var collection = new RodanClientCore.ResourceCollection();
         collection.fetch({data: {project: options.project.id}});
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__RESOURCES_LOAD, {data: {project: options.project.id}});
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__RESOURCES_LOAD, {data: {project: options.project.id}});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
         this._layoutView = new LayoutViewModel();
         Radio.channel('rodan').request(Events.REQUEST__MAINREGION_SHOW_VIEW, {view: this._layoutView});
         var view = new ViewResourceCollection({collection: collection,

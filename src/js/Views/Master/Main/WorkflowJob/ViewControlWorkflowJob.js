@@ -1,6 +1,7 @@
-import RODAN_EVENTS from 'js/Shared/RODAN_EVENTS';
+import Events from 'js/Events';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * View for editing WorkflowJob.
@@ -28,9 +29,9 @@ export default class ViewControlWorkflowJob extends Marionette.ItemView
      */
     _handleButtonSave()
     {
-        Radio.channel('rodan').request(RODAN_EVENTS.REQUEST__MODAL_HIDE);
+        Radio.channel('rodan').request(Events.REQUEST__MODAL_HIDE);
         this.model.set({'name': this.ui.textName.val()});
-        Radio.channel('rodan').request(RODAN_EVENTS.REQUEST__WORKFLOWJOB_SAVE, {workflowjob: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOWJOB_SAVE, {workflowjob: this.model});
     }
 
     /**
@@ -38,8 +39,8 @@ export default class ViewControlWorkflowJob extends Marionette.ItemView
      */
     _handleButtonDelete()
     {
-        Radio.channel('rodan').request(RODAN_EVENTS.REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOB, {workflowjob: this.model, workflow: this._workflow});
-        Radio.channel('rodan').request(RODAN_EVENTS.REQUEST__MODAL_HIDE);
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOWBUILDER_REMOVE_WORKFLOWJOB, {workflowjob: this.model, workflow: this._workflow});
+        Radio.channel('rodan').request(Events.REQUEST__MODAL_HIDE);
     }
 }
 ViewControlWorkflowJob.prototype.template = '#template-main_workflowjob';

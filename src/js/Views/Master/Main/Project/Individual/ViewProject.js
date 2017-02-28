@@ -1,7 +1,7 @@
 import Events from 'js/Events';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * Project view.
@@ -16,7 +16,7 @@ export default class ViewProject extends Marionette.CompositeView
      */
     _handleButtonSave()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__PROJECT_SAVE, 
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__PROJECT_SAVE, 
                                   {project: this.model,
                                    fields: {name: this.ui.textName.val(), description: this.ui.textDescription.val()}});
     }
@@ -26,7 +26,7 @@ export default class ViewProject extends Marionette.CompositeView
      */
     _handleButtonDelete()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__PROJECT_DELETE, {project: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__PROJECT_DELETE, {project: this.model});
     }
 
     /**

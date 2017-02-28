@@ -1,7 +1,7 @@
 import Marionette from 'backbone.marionette';
 import Events from 'js/Events';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * Workflow view.
@@ -16,7 +16,7 @@ export default class ViewWorkflow extends Marionette.ItemView
      */
     _handleButtonRunWorkflow()
     {
-        rodan.rodan_client_core.channel.trigger(rodan.rodan_client_core.events.EVENT__WORKFLOWBUILDER_CREATE_WORKFLOWRUN, {workflow: this.model});
+        RodanClientCore.channel.trigger(RodanClientCore.events.EVENT__WORKFLOWBUILDER_CREATE_WORKFLOWRUN, {workflow: this.model});
     }
 
     /**
@@ -24,7 +24,7 @@ export default class ViewWorkflow extends Marionette.ItemView
      */
     _handleButtonDeleteWorkflow()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__WORKFLOW_DELETE, {workflow: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOW_DELETE, {workflow: this.model});
     }
 
     /**
@@ -32,7 +32,7 @@ export default class ViewWorkflow extends Marionette.ItemView
      */
     _handleButtonEditWorkflow()
     {
-        Radio.channel('rodan').trigger(Events.EVENT__WORKFLOWBUILDER_SELECTED, {workflow: this.model});
+        RodanClientCore.channel.trigger(RodanClientCore.events.EVENT__WORKFLOWBUILDER_SELECTED, {workflow: this.model});
     }
 
     /**
@@ -47,7 +47,7 @@ export default class ViewWorkflow extends Marionette.ItemView
      */
     _handleButtonExport()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__WORKFLOW_EXPORT, {workflow: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOW_EXPORT, {workflow: this.model});
     }
 
     /**
@@ -55,7 +55,7 @@ export default class ViewWorkflow extends Marionette.ItemView
      */
     _handleButtonSave()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__WORKFLOW_SAVE, {workflow: this.model, fields: {name: this.ui.textName.val(), description: this.ui.textDescription.val()}});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOW_SAVE, {workflow: this.model, fields: {name: this.ui.textName.val(), description: this.ui.textDescription.val()}});
     }
 }
 ViewWorkflow.prototype.modelEvents = {

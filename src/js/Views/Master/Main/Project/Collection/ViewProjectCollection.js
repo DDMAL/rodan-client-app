@@ -1,6 +1,6 @@
 import BaseViewCollection from 'js/Views/Master/Main/BaseViewCollection';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewProjectCollectionItem from './ViewProjectCollectionItem';
 
 /**
@@ -10,8 +10,8 @@ export default class ViewProjectCollection extends BaseViewCollection
 {
     _handleButtonNewProject()
     {
-        var user = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__AUTHENTICATION_USER);
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__PROJECT_CREATE, {creator: user});
+        var user = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__AUTHENTICATION_USER);
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__PROJECT_CREATE, {creator: user});
     }
 }
 

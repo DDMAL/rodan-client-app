@@ -35,8 +35,8 @@ export default class LayoutViewProjectUsers extends Marionette.LayoutView
     {
         Radio.channel('rodan').off(null, null, this);
         Radio.channel('rodan').stopReplying(null, null, this);
-        rodan.rodan_client_core.channel.off(null, null, this);
-        rodan.rodan_client_core.channel.stopReplying(null, null, this);
+        RodanClientCore.channel.off(null, null, this);
+        RodanClientCore.channel.stopReplying(null, null, this);
     }
 
     /**
@@ -57,7 +57,7 @@ export default class LayoutViewProjectUsers extends Marionette.LayoutView
      */
     _handleButtonAddAdmin()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__PROJECT_ADD_USER_ADMIN,
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__PROJECT_ADD_USER_ADMIN,
                                        {username: this._getSelectedUser(), project: this._project});
     }
 
@@ -66,7 +66,7 @@ export default class LayoutViewProjectUsers extends Marionette.LayoutView
      */
     _handleButtonAddWorker()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__PROJECT_ADD_USER_WORKER,
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__PROJECT_ADD_USER_WORKER,
                                        {username: this._getSelectedUser(), project: this._project});
     }
 

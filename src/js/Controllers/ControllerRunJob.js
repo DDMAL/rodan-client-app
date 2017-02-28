@@ -2,7 +2,7 @@ import BaseController from './BaseController';
 import Events from 'js/Events';
 import LayoutViewModel from 'js/Views/Master/Main/LayoutViewModel';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewRunJob from 'js/Views/Master/Main/RunJob/Individual/ViewRunJob';
 import ViewRunJobCollection from 'js/Views/Master/Main/RunJob/Collection/ViewRunJobCollection';
 import ViewRunJobCollectionItem from 'js/Views/Master/Main/RunJob/Collection/ViewRunJobCollectionItem';
@@ -57,9 +57,9 @@ export default class ControllerRunJob extends BaseController
      */
     _handleEventCollectionSelected(options)
     {
-        var collection = new rodan.rodan_client_core.RunJobCollection();
+        var collection = new RodanClientCore.RunJobCollection();
         collection.fetch({data: {project: options.project.id}});
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__UPDATER_SET_COLLECTIONS, {collections: [collection]});
         this._layoutView = new LayoutViewModel();
         Radio.channel('rodan').request(Events.REQUEST__MAINREGION_SHOW_VIEW, {view: this._layoutView});
         var view = new ViewRunJobCollection({collection: collection,

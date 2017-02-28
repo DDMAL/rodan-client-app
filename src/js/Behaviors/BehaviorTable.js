@@ -5,7 +5,7 @@ import Events from 'js/Events';
 import 'jqueryui';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * A Marionette Behavior for tables. This class defines sorting and filtering.
@@ -23,8 +23,8 @@ export default class BehaviorTable extends Marionette.Behavior
         this._filtersInjected = false;
         this._datetimepickerElements = [];
         this._lastTarget = null;
-        this._multipleSelectionKey = rodan.rodan_client_core.env.getMultipleSelectionKey();
-        this._rangeSelectionKey = rodan.rodan_client_core.env.getRangeSelectionKey();
+        this._multipleSelectionKey = RodanClientCore.env.getMultipleSelectionKey();
+        this._rangeSelectionKey = RodanClientCore.env.getRangeSelectionKey();
     }
 
     /**
@@ -191,7 +191,7 @@ export default class BehaviorTable extends Marionette.Behavior
         {
             var elementId = this._datetimepickerElements[index];
             $(this.el).find(elementId).datetimepicker();
-            $(this.el).find(elementId).data('DateTimePicker').format(rodan.rodan_client_core.config.DATETIME_FORMAT);
+            $(this.el).find(elementId).data('DateTimePicker').format(RodanClientCore.config.DATETIME_FORMAT);
             $(this.el).find(elementId).on('dp.change', () => this._handleSearch());
         }
 
@@ -353,7 +353,7 @@ export default class BehaviorTable extends Marionette.Behavior
      */
     _handleCollectionEventSync(collection)
     {
-        if (collection.route)// instanceof rodan.rodan_client_core.collections.BaseCollection)
+        if (collection.route)// instanceof RodanClientCore.collections.BaseCollection)
         {
             // We only inject if: the table exists, a route exists, we haven't injected yet, and the table has items.
             if ($(this.el).find(this.options.table).length > 0 &&
@@ -361,7 +361,7 @@ export default class BehaviorTable extends Marionette.Behavior
                 !this._filtersInjected &&
                 collection.length > 0)
             {
-                var options = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__SERVER_GET_ROUTE_OPTIONS, {route: collection.route});
+                var options = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__SERVER_GET_ROUTE_OPTIONS, {route: collection.route});
                 if (options)
                 {
                     this._injectFiltering(options.filter_fields);

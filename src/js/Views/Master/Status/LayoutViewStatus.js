@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Marionette from 'backbone.marionette';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import Radio from 'backbone.radio';
 
 /**
@@ -22,10 +22,10 @@ export default class LayoutViewStatus extends Marionette.LayoutView
         this._completed = 0;
 
         this._updateStatusBar();
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__SERVER_REQUESTS_PENDING_UPDATE, (options) => this._handleEventPendingRequests(options));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__SERVER_IDLE, () => this._handleEventServerNotice('progress-bar'));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__SERVER_WAIT, () => this._handleEventServerNotice('progress-bar-warning'));
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__SERVER_PANIC, () => this._handleEventServerNotice('progress-bar-danger'));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__SERVER_REQUESTS_PENDING_UPDATE, (options) => this._handleEventPendingRequests(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__SERVER_IDLE, () => this._handleEventServerNotice('progress-bar'));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__SERVER_WAIT, () => this._handleEventServerNotice('progress-bar-warning'));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__SERVER_PANIC, () => this._handleEventServerNotice('progress-bar-danger'));
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////

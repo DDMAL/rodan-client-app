@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * RunJob view.
@@ -29,7 +29,7 @@ export default class ViewRunJob extends Marionette.ItemView
      */
     _handleButtonOpen()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__RUNJOB_ACQUIRE, {runjob: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__RUNJOB_ACQUIRE, {runjob: this.model});
     }
 }
 ViewRunJob.prototype.modelEvents = {

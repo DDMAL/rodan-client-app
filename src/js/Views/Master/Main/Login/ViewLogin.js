@@ -1,6 +1,6 @@
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * Login view.
@@ -15,7 +15,7 @@ export default class ViewLogin extends Marionette.ItemView
      */
     initialize()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__UPDATER_CLEAR);
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__UPDATER_CLEAR);
     }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -26,7 +26,7 @@ export default class ViewLogin extends Marionette.ItemView
      */
     _handleButton()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__AUTHENTICATION_LOGIN, {username: this.ui.textUsername.val(), password: this.ui.textPassword.val()}); 
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__AUTHENTICATION_LOGIN, {username: this.ui.textUsername.val(), password: this.ui.textPassword.val()}); 
     }
 }
 ViewLogin.prototype.modelEvents = {

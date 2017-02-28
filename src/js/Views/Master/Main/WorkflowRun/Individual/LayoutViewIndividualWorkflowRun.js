@@ -2,7 +2,7 @@ import Events from 'js/Events';
 import LayoutViewModel from 'js/Views/Master/Main/LayoutViewModel';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewResourceCollection from 'js/Views/Master/Main/Resource/Collection/ViewResourceCollection';
 import ViewResourceCollectionItem from 'js/Views/Master/Main/Resource/Collection/ViewResourceCollectionItem';
 import ViewRunJobCollection from 'js/Views/Master/Main/RunJob/Collection/ViewRunJobCollection';
@@ -99,7 +99,7 @@ export default class LayoutViewIndividualWorkflowRun extends Marionette.LayoutVi
     _handleButtonSave()
     {
         this.model.set({name: this.ui.textName.val(), description: this.ui.textDescription.val()});
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__WORKFLOWRUN_SAVE, {workflowrun: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOWRUN_SAVE, {workflowrun: this.model});
     }
 
     /**
@@ -107,7 +107,7 @@ export default class LayoutViewIndividualWorkflowRun extends Marionette.LayoutVi
      */
     _handleButtonDelete()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__WORKFLOWRUN_DELETE, {workflowrun: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__WORKFLOWRUN_DELETE, {workflowrun: this.model});
     }
 }
 LayoutViewIndividualWorkflowRun.prototype.modelEvents = {

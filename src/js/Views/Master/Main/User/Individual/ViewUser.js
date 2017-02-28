@@ -2,7 +2,7 @@ import $ from 'jquery';
 import Events from 'js/Events';
 import Marionette from 'backbone.marionette';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 import ViewPassword from './ViewPassword';
 
 /**
@@ -19,7 +19,7 @@ export default class ViewUser extends Marionette.CompositeView
     initialize()
     {
         /** @ignore */
-        rodan.rodan_client_core.channel.on(rodan.rodan_client_core.events.EVENT__USER_PREFERENCE_LOADED, (options) => this._handleUserPreferenceLoaded(options));
+        RodanClientCore.channel.on(RodanClientCore.events.EVENT__USER_PREFERENCE_LOADED, (options) => this._handleUserPreferenceLoaded(options));
     }
 
     /**
@@ -38,14 +38,14 @@ export default class ViewUser extends Marionette.CompositeView
      */
     _handleButtonSave()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__USER_SAVE, 
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__USER_SAVE, 
                                   {fields: {first_name: this.ui.textFirstName.val(), 
                                             last_name: this.ui.textLastName.val(), 
                                             email: this.ui.textEmail.val()}});
         if (this._userPreference)
         {
             this._userPreference.set({'send_email': $(this.ui.checkboxSendEmail).prop('checked')});
-            rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__USER_PREFERENCE_SAVE, {user_preference: this._userPreference});
+            RodanClientCore.channel.request(RodanClientCore.events.REQUEST__USER_PREFERENCE_SAVE, {user_preference: this._userPreference});
         }
     }
 
@@ -73,7 +73,7 @@ export default class ViewUser extends Marionette.CompositeView
      */
     _renderUserPreference()
     {
-        this._userPreference = rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__USER_PREFERENCE);
+        this._userPreference = RodanClientCore.channel.request(RodanClientCore.events.REQUEST__USER_PREFERENCE);
         if (this._userPreference)
         {
             $(this.ui.divUserPreference).show();

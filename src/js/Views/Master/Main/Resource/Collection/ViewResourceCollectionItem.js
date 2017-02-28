@@ -1,7 +1,7 @@
 import BaseViewCollectionItem from 'js/Views/Master/Main/BaseViewCollectionItem';
 import Events from 'js/Events';
 import Radio from 'backbone.radio';
-import rodan from 'rodan-client-core';
+import RodanClientCore from 'rodan-client-core';
 
 /**
  * Item view for Resource Collection.
@@ -24,7 +24,7 @@ export default class ViewResourceCollectionItem extends BaseViewCollectionItem
      */
     _handleDblClick()
     {
-        rodan.rodan_client_core.channel.request(rodan.rodan_client_core.events.REQUEST__RESOURCE_DOWNLOAD, {resource: this.model});
+        RodanClientCore.channel.request(RodanClientCore.events.REQUEST__RESOURCE_DOWNLOAD, {resource: this.model});
     }
 }
 ViewResourceCollectionItem.prototype.template = '#template-main_resource_collection_item';
