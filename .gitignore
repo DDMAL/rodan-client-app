@@ -5,5 +5,6 @@ node_modules/
 build
 configuration.json
 plugins.json
+src/js/.plugins.js
 ._*
 __*
